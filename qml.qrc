@@ -1,0 +1,13 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+    <file>qtquickcontrols2.conf</file>
+    <file>main.qml</file>
+    <file>assets/MaterialIcons-Regular.ttf</file>
+    <file>assets/MaterialDesign.js</file>
+    <file>assets/icon.ico</file>
+    <file>pages/Emotes.qml</file>
+    <file>pages/Feed.qml</file>
+    <file>pages/Settings.qml</file>
+    <file>pages/emotesapi.js</file>
+</qresource>
+</RCC>

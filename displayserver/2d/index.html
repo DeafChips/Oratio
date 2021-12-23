@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Oratio</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="index.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .message {
+            opacity: 1;
+            overflow-wrap: break-word;
+        }
+
+        #feed {
+            display: inline-block;
+            padding: 10px;
+            color: white;
+            font-size: 24px;
+            background-color: #000000FF;
+            border: 2px solid white;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0px;
+            max-width: 100vw;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img src='https://cdn.betterttv.net/emote/5f7c9234ccde1f4a870c47c4/1x'> -->
+    <p style="display: none;" id="oratio">Not connected</p>
+    <div id="feed" style="display: none;"></div>
+    <script>
+        let o = document.getElementById('oratio');
+        window.addEventListener("load", onLoad, false);
+
+        const feed = document.getElementById('feed');
+        let typeitSpeed = 25;
+        let waitTime = 5000;
+        let fadeOutSpeed = 1000;
+        let globalTypeCheck = [];
+        let sound = new Howl({
+            src: ['../sounds/boop.mp3']
+        });
+        let settingInterval;
+
+        const settingsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+
+        function typeOut(message) {
+            const el = document.createElement('div')
+            el.setAttribute('class', 'message');
+            feed.appendChild(el);
+            feed.style.display = 'inline-block';
+            const typeit = new TypeIt(el, {
+                strings: message,
+                html: true,
+                speed: typeitSpeed,
+                lifelike: false,
+                cursor: false,
+                startDelay: 0,
+                beforeStep: async (instance) => {
+                },
+                afterStep: async (instance) => {
+                    // if ()
+                    // instance.getQueue().getItems().forEach((i) => {
+                    //     console.log(i[0]);
+                    // });
+                    sound.play();
+                },
+                afterComplete: async (instance) => {
+                    instance.destroy();
+                    var curInd = globalTypeCheck.indexOf(instance);
+                    let sliceG = [];
+                    if (curInd + 1 == globalTypeCheck.length) {
+                        sliceG = globalTypeCheck.slice(0, curInd+1);
+                    } else {
+                        sliceG = globalTypeCheck.slice(0, globalTypeCheck.length);
+                    }
+                    if (sliceG.every(x => x.is('completed'))) {
+                        setTimeout(() => {
+                            sliceG.forEach((g, ind) => {
+                                let curEL = g.getElement();
+                                curEL.style.transition = "opacity " + fadeOutSpeed + "ms linear";
+                                curEL.style.opacity = '0';
+                                setTimeout(() => {
+                                    curEL.remove();
+                                    if (!feed.hasChildNodes()) {
+                                        feed.style.display = 'none';
+                                    }
+                                }, fadeOutSpeed);
+                                // globalTypeCheck.remove(g);
+                            });
+                        }, 5000);
+                        for (let i=0; i < sliceG.length; i++) {
+                            globalTypeCheck.shift();
+                        }
+                    }
+                }
+            }).go();
+            globalTypeCheck.push(typeit);
+        }
+
+        function onLoad() {
+            websocket = new WebSocket("ws://localhost:7778");
+
+            websocket.onopen = function (evt) { onOpen(evt) };
+            websocket.onclose = function (evt) { onClose(evt) };
+            websocket.onmessage = function (evt) { onMessage(evt) };
+            websocket.onerror = function (evt) { onError(evt) };
+
+            
+        }
+
+        function onOpen(evt) {
+            o.innerText = "Connected";
+            console.log('WebSocket connection established.');
+        }
+
+        function onClose(evt) {
+            o.innerText = "Disconnected";
+            console.log('WebSocket connection closed');
+            setTimeout(onLoad, 5000);
+        }
+
+        function onMessage(evt) {
+            console.log(evt.data);
+            var d = JSON.parse(evt.data);
+            if ("message" in d) {
+                typeOut(d["message"]);
+            } else if ("cssSetting" in d) {
+                Object.entries(d["cssSetting"]).forEach(([k, v]) => {
+                    feed.style[k] = v;
+                });
+            } else if ("settingScreen" in d) {
+                if (d["settingScreen"]) {
+                    settingInterval = setInterval(() => {
+                        typeOut(settingsText);
+                    }, 4000);
+                } else {
+                    clearInterval(settingInterval);
+                    if (feed.hasChildNodes()) {
+                        feed.childNodes.forEach((e) => {
+                            e.remove();
+                        });
+                    }
+                    feed.style.display = 'none';
+                }
+            } else if ("jsSetting" in d) {
+                if ("typeit-speed" in d["jsSetting"]) {
+                    typeitSpeed = parseInt(d["jsSetting"]["typeit-speed"]);
+                }
+                if ("fadeout-speed" in d["jsSetting"]) {
+                    fadeOutSpeed = parseInt(d["jsSetting"]["fadeout-speed"]);
+                }
+                if ("sound" in d["jsSetting"]) {
+                    sound = new Howl({
+                        src: ['../sounds/' + d["jsSetting"]["sound"]]
+                    });
+                }
+            }
+        }
+
+        function onError(evt) {
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+pyinstaller --name="Oratio" -w .\Oratio.py -i ".\assets\icon.ico" --add-data ".\\displayserver\\;.\\displayserver\\" --noconfirm

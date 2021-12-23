@@ -1,0 +1,7 @@
+__pycache__
+build
+dist
+Oratio.dist
+venv
+out.log
+pack-nuitka.bat

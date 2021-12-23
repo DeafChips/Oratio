@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <button id="loginbutton" onclick=doRedirect()>Login</button>
+        <p id="token"></p>
+    </body>
+    <script type="text/javascript">
+        function doRedirect() {
+            document.location = "https://id.twitch.tv/oauth2/authorize?client_id=6jmrcsh2a7baodilw1fjn6knsh9la4&redirect_uri=http://localhost:7777/twitch&response_type=token&scope=chat:edit chat:read"
+        }
+        const oauthHash = location.hash.substr(1);
+        const oauthToken = oauthHash.substr(oauthHash.indexOf('access_token=')).split('&')[0].split('=')[1];
+        if (oauthToken) {
+            history.replaceState(null, null, ' ');
+        }
+        (function(){
+            if (oauthToken) {
+                document.getElementById('loginbutton').style.display = 'none';
+                document.getElementById('token').innerText = oauthToken;
+            }
+        })();
+    </script>
+</html>
