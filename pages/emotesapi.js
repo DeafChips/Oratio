@@ -112,7 +112,7 @@ class EmotesApi {
                             'emoteId': e['id'],
                             'emoteName': e['name'],
                             'emoteCategory': '7TV Channel',
-                            'emotePath': e['urls'][0][1]
+                            'emotePath': e['urls'][3][1]
                         };
                     }
                 });
@@ -135,7 +135,7 @@ class EmotesApi {
                             'emoteId': e['id'],
                             'emoteName': e['name'],
                             'emoteCategory': '7TV Global',
-                            'emotePath': e['urls'][0][1]
+                            'emotePath': e['urls'][3][1]
                         };
                     }
                 });
@@ -159,7 +159,7 @@ class EmotesApi {
                            'emoteId': e['id'],
                            'emoteName': e['code'],
                            'emoteCategory': 'BTTV Channel',
-                           'emotePath': 'https://cdn.betterttv.net/emote/' + e['id'] + '/1x'
+                           'emotePath': 'https://cdn.betterttv.net/emote/' + e['id'] + '/3x'
                        };
                     }
                 });
@@ -182,7 +182,7 @@ class EmotesApi {
                            'emoteId': e['id'],
                            'emoteName': e['code'],
                            'emoteCategory': 'BTTV Global',
-                           'emotePath': 'https://cdn.betterttv.net/emote/' + e['id'] + '/1x'
+                           'emotePath': 'https://cdn.betterttv.net/emote/' + e['id'] + '/3x'
                        };
                    }
                 });
@@ -206,7 +206,7 @@ class EmotesApi {
                            'emoteId': e['id'],
                            'emoteName': e['name'],
                            'emoteCategory': 'FFZ Channel',
-                           'emotePath': 'https:' + e['urls']['1']
+                           'emotePath': 'https:' + e['urls']['4']
                        };
                    }
                 });
@@ -229,7 +229,7 @@ class EmotesApi {
                            'emoteId': e['id'],
                            'emoteName': e['name'],
                            'emoteCategory': 'FFZ Global',
-                           'emotePath': 'https:' + e['urls']['1']
+                           'emotePath': 'https:' + e['urls']['4']
                        };
                    }
                 });
@@ -254,7 +254,7 @@ class EmotesApi {
                             'emoteId': e['id'],
                             'emoteName': e['name'],
                             'emoteCategory': 'Twitch Channel',
-                            'emotePath': 'https://static-cdn.jtvnw.net/emoticons/v2/' + e['id'] + '/default/dark/1.0'
+                            'emotePath': 'https://static-cdn.jtvnw.net/emoticons/v2/' + e['id'] + '/default/dark/3.0'
                         };
                     }
                 });
@@ -280,7 +280,7 @@ class EmotesApi {
                             'emoteId': e['id'],
                             'emoteName': e['name'],
                             'emoteCategory': 'Twitch Global',
-                            'emotePath': 'https://static-cdn.jtvnw.net/emoticons/v2/' + e['id'] + '/default/dark/1.0'
+                            'emotePath': 'https://static-cdn.jtvnw.net/emoticons/v2/' + e['id'] + '/default/dark/3.0'
                         };
                     }
                 });
@@ -310,7 +310,7 @@ class EmotesApi {
                                 'emoteId': e['id'],
                                 'emoteName': e['name'],
                                 'emoteCategory': 'Twitch' + e['emote_type'],
-                                'emotePath': 'https://static-cdn.jtvnw.net/emoticons/v2/' + e['id'] + '/default/dark/1.0'
+                                'emotePath': 'https://static-cdn.jtvnw.net/emoticons/v2/' + e['id'] + '/default/dark/3.0'
                             };
                         }
                     });

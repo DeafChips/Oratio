@@ -39,6 +39,9 @@ ApplicationWindow {
                             var payload = {};
                             payload["settingScreen"] = false;
                             displayServerSocket.sendTextMessage(JSON.stringify(payload));
+                            var payload = {};
+                            payload["jsSetting"] = { "muted": false };
+                            displayServerSocket.sendTextMessage(JSON.stringify(payload));
                         }
                     }
                     if (stackView.depth > 1) {
@@ -100,6 +103,9 @@ ApplicationWindow {
                         var payload = {};
                         payload["settingScreen"] = true;
                         displayServerSocket.sendTextMessage(JSON.stringify(payload));
+                        var payload = {};
+                        payload["jsSetting"] = { "muted": true };
+                        displayServerSocket.sendTextMessage(JSON.stringify(payload));
                     }
                 }
                 activeFocusOnTab: false
@@ -153,6 +159,7 @@ ApplicationWindow {
         property var display2Dbackgroundcolor: "#000000FF"
         property var display2Dbackgroundborder: "2px solid #FFFFFFFF"
         property var display2Dfont: "Segoe UI Black"
+        property var display2Dfontsize: "24px"
         property var display2Dsoundname: "boop.mp3"
         property var display2Dsoundfile: appDirPath + "/displayserver/sounds/boop.mp3" 
         property var display2Dtypespeed: "25"
@@ -168,14 +175,15 @@ ApplicationWindow {
             cssPayload["cssSetting"] = {
                 "background-color": settings.value("display2Dbackgroundcolor", ""),
                 "border": settings.value("display2Dbackgroundborder", ""),
-                "font-family": settings.value("display2Ddont", "") 
+                "font-family": settings.value("display2Dfont", ""),
+                "font-size": settings.value("display2Dfontsize", ""),
             };
             displayServerSocket.sendTextMessage(JSON.stringify(cssPayload))
             var jsPayload = {}
             jsPayload["jsSetting"] = {
                 "typeit-speed": settings.value("display2Dtypespeed", "") ,
                 "fadeout-speed": settings.value("display2Dfadeoutspeed", ""),
-                "sound": settings.value("display2Dsoundname", "")
+                "sound": settings.value("display2Dsoundname", ""),
             };
             displayServerSocket.sendTextMessage(JSON.stringify(jsPayload));
         }

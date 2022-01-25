@@ -46,7 +46,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.margins: 8
                         Layout.alignment: Qt.AlignTop
-                        text: qsTr("While on the settings page. Example text will be sent to the display server for you to visualize updates")
+                        text: qsTr("While on the settings page. Example text will be sent to the display server for you to visualize updates, however audio is muted by default")
                         wrapMode: Text.Wrap
                     }
 
@@ -123,6 +123,24 @@ Page {
                                     }
                                 });
                             }
+                        }
+                    }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.margins: 8
+                        spacing: 8
+                        visible: !settingSwitch.checked
+                        Label {
+                            id: display2DfontsizeText
+                            text: qsTr("Font Size: ")
+                            wrapMode: Text.Wrap
+                        }
+                        TextField {
+                            id: display2Dfontsize
+                            Layout.fillWidth: true
+                            placeholderText: qsTr("Default: 24px")
+                            text: settings.value("display2Dfontsize", "")
+                            selectByMouse: true
                         }
                     }
                     RowLayout {
@@ -230,14 +248,15 @@ Page {
                         cssPayload["cssSetting"] = {
                             "background-color": display2Dbackgroundcolor.text,
                             "border": display2Dbackgroundborder.text,
-                            "font-family": display2Dfont.currentText 
+                            "font-family": display2Dfont.currentText,
+                            "font-size": display2Dfontsize.text,
                         };
                         displayServerSocket.sendTextMessage(JSON.stringify(cssPayload))
                         var jsPayload = {}
                         jsPayload["jsSetting"] = {
                             "typeit-speed": display2Dtypespeed.text,
                             "fadeout-speed": display2Dfadeoutspeed.text,
-                            "sound": display2Dsound.currentText
+                            "sound": display2Dsound.currentText,
                         };
                         displayServerSocket.sendTextMessage(JSON.stringify(jsPayload));
                         statusText.color = "green";
@@ -250,6 +269,7 @@ Page {
                     settings.setValue('display2Dbackgroundcolor', display2Dbackgroundcolor.text)
                     settings.setValue('display2Dbackgroundborder', display2Dbackgroundborder.text)
                     settings.setValue('display2Dfont', display2Dfont.currentText)
+                    settings.setValue('display2Dfontsize', display2Dfontsize.text)
                     settings.setValue('display2Dsoundfile', display2Dsound.currentValue.toString())
                     settings.setValue('display2Dsoundname', display2Dsound.currentText)
                     settings.setValue('display2Dtypespeed', display2Dtypespeed.text)

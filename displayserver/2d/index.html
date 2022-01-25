@@ -17,7 +17,7 @@
             opacity: 1;
             overflow-wrap: break-word;
         }
-
+        
         #feed {
             display: inline-block;
             padding: 10px;
@@ -35,7 +35,6 @@
 </head>
 
 <body>
-    <!-- <img src='https://cdn.betterttv.net/emote/5f7c9234ccde1f4a870c47c4/1x'> -->
     <p style="display: none;" id="oratio">Not connected</p>
     <div id="feed" style="display: none;"></div>
     <script>
@@ -46,10 +45,12 @@
         let typeitSpeed = 25;
         let waitTime = 5000;
         let fadeOutSpeed = 1000;
+        let fontSize = "24px";
         let globalTypeCheck = [];
         let sound = new Howl({
             src: ['../sounds/boop.mp3']
         });
+        let muted = false;
         let settingInterval;
 
         const settingsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
@@ -69,11 +70,9 @@
                 beforeStep: async (instance) => {
                 },
                 afterStep: async (instance) => {
-                    // if ()
-                    // instance.getQueue().getItems().forEach((i) => {
-                    //     console.log(i[0]);
-                    // });
-                    sound.play();
+                    if (!muted) {
+                        sound.play();
+                    }
                 },
                 afterComplete: async (instance) => {
                     instance.destroy();
@@ -96,7 +95,6 @@
                                         feed.style.display = 'none';
                                     }
                                 }, fadeOutSpeed);
-                                // globalTypeCheck.remove(g);
                             });
                         }, 5000);
                         for (let i=0; i < sliceG.length; i++) {
@@ -139,6 +137,9 @@
                 Object.entries(d["cssSetting"]).forEach(([k, v]) => {
                     feed.style[k] = v;
                 });
+                if  ("font-size" in d["cssSetting"]) {
+                    fontSize = d["cssSetting"]["font-size"];
+                }
             } else if ("settingScreen" in d) {
                 if (d["settingScreen"]) {
                     settingInterval = setInterval(() => {
@@ -164,6 +165,9 @@
                     sound = new Howl({
                         src: ['../sounds/' + d["jsSetting"]["sound"]]
                     });
+                }
+                if ("muted" in d["jsSetting"]) {
+                    muted = d["jsSetting"]["muted"];
                 }
             }
         }

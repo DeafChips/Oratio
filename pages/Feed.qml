@@ -151,7 +151,7 @@ Page {
                 if (displayServerSocket) {
                     var payload = {}
                     var displayText = t;
-                    displayText = displayText.replace(window.emoteRegex, (key) => '<img src="' + window.emoteDict[key].emotePath + '">');
+                    displayText = displayText.replace(window.emoteRegex, (key) => '<img style="height:' + settings.value("display2Dfontsize", "") + '" src="' + window.emoteDict[key].emotePath + '">');
                     payload["message"] = displayText;
                     displayServerSocket.sendTextMessage(JSON.stringify(payload))
                 }

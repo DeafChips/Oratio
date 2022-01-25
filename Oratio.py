@@ -7,8 +7,6 @@ from PySide6.QtQml import QQmlApplicationEngine
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
 import threading
-import pywin32_system32
-import pywintypes
 import ctypes
 import ctypes.wintypes as cwin
 from win32con import WM_HOTKEY, MOD_CONTROL, SW_SHOWMINIMIZED, SW_MINIMIZE, SW_NORMAL, SW_SHOW

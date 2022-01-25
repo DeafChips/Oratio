@@ -24,6 +24,9 @@ Page {
                     padding: 8
                     AnimatedImage {
                         anchors.horizontalCenter: parent.horizontalCenter
+                        height: 32
+                        width: 32
+                        fillMode: Image.PreserveAspectFit
                         source: model.url
                     }
                     Label {
