@@ -50,10 +50,10 @@
         let sound = new Howl({
             src: ['../sounds/boop.mp3']
         });
-        let muted = false;
-        let settingInterval;
+        // let muted = false;
+        // let settingInterval;
 
-        const settingsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        // const settingsText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 
         function typeOut(message) {
             const el = document.createElement('div')
@@ -70,9 +70,9 @@
                 beforeStep: async (instance) => {
                 },
                 afterStep: async (instance) => {
-                    if (!muted) {
+                    // if (!muted) {
                         sound.play();
-                    }
+                    // }
                 },
                 afterComplete: async (instance) => {
                     instance.destroy();
@@ -113,8 +113,6 @@
             websocket.onclose = function (evt) { onClose(evt) };
             websocket.onmessage = function (evt) { onMessage(evt) };
             websocket.onerror = function (evt) { onError(evt) };
-
-            
         }
 
         function onOpen(evt) {
@@ -141,19 +139,19 @@
                     fontSize = d["cssSetting"]["font-size"];
                 }
             } else if ("settingScreen" in d) {
-                if (d["settingScreen"]) {
-                    settingInterval = setInterval(() => {
-                        typeOut(settingsText);
-                    }, 4000);
-                } else {
-                    clearInterval(settingInterval);
-                    if (feed.hasChildNodes()) {
-                        feed.childNodes.forEach((e) => {
-                            e.remove();
-                        });
-                    }
-                    feed.style.display = 'none';
-                }
+                // if (d["settingScreen"]) {
+                //     settingInterval = setInterval(() => {
+                //         typeOut(settingsText);
+                //     }, 4000);
+                // } else {
+                //     clearInterval(settingInterval);
+                //     if (feed.hasChildNodes()) {
+                //         feed.childNodes.forEach((e) => {
+                //             e.remove();
+                //         });
+                //     }
+                //     feed.style.display = 'none';
+                // }
             } else if ("jsSetting" in d) {
                 if ("typeit-speed" in d["jsSetting"]) {
                     typeitSpeed = parseInt(d["jsSetting"]["typeit-speed"]);
@@ -166,9 +164,9 @@
                         src: ['../sounds/' + d["jsSetting"]["sound"]]
                     });
                 }
-                if ("muted" in d["jsSetting"]) {
-                    muted = d["jsSetting"]["muted"];
-                }
+                // if ("muted" in d["jsSetting"]) {
+                //     muted = d["jsSetting"]["muted"];
+                // }
             }
         }
 

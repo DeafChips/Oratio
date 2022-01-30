@@ -36,18 +36,25 @@ Page {
                 ColumnLayout {
                     anchors.fill: parent
                     spacing: 8
-                    Label {
+                    TextEdit {
                         Layout.fillWidth: true
                         Layout.margins: 8
                         text: !settingSwitch.checked ? qsTr("Display server running at <i>http://localhost:7777/2d/</i> (copy this url to your OBS browser source)") : qsTr("Display server running at <i>http://localhost:7777/3d/</i> (copy this url to your OBS browser source)")
                         wrapMode: Text.Wrap
+                        readOnly: true
+                        color: 'white'
+                        textFormat: TextEdit.RichText
+                        selectByMouse: true
                     }
-                    Label {
+                    TextEdit {
                         Layout.fillWidth: true
                         Layout.margins: 8
                         Layout.alignment: Qt.AlignTop
                         text: qsTr("While on the settings page. Example text will be sent to the display server for you to visualize updates, however audio is muted by default")
                         wrapMode: Text.Wrap
+                        readOnly: true
+                        textFormat: TextEdit.RichText
+                        color: 'white'
                     }
 
                     Rectangle {

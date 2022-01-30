@@ -35,6 +35,7 @@ ApplicationWindow {
                 font.pixelSize: Qt.application.font.pixelSize * 1.6
                 onClicked: {
                     if (stackView.currentItem.title == "Settings") {
+                        /*
                         if (displayServerSocket) {
                             var payload = {};
                             payload["settingScreen"] = false;
@@ -43,6 +44,7 @@ ApplicationWindow {
                             payload["jsSetting"] = { "muted": false };
                             displayServerSocket.sendTextMessage(JSON.stringify(payload));
                         }
+                        */
                     }
                     if (stackView.depth > 1) {
                         stackView.pop()
@@ -99,6 +101,7 @@ ApplicationWindow {
                     if (stackView.depth === 1){
                         stackView.push("qrc:/pages/Settings.qml")
                     }
+                    /*
                     if (displayServerSocket) {
                         var payload = {};
                         payload["settingScreen"] = true;
@@ -107,6 +110,7 @@ ApplicationWindow {
                         payload["jsSetting"] = { "muted": true };
                         displayServerSocket.sendTextMessage(JSON.stringify(payload));
                     }
+                    */
                 }
                 activeFocusOnTab: false
                 visible: stackView.depth > 1 ? false : true
